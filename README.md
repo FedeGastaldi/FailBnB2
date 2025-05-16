@@ -1,10 +1,20 @@
-<img src="public/logo.png">
-Proyecto Final de Practicas Profesionales 4
-Enzo Dellape, Federico Gastaldi
-Proyecto Realizado con las siguientes tecnologias:
+# Proyecto Final – Prácticas Profesionales 4
 
-<ul> 
-<li>React </li>
-<li>NodeJS </li>
-<li>MySql </li>
-</ul>
+<img src="public/logo.png" alt="Logo del Proyecto" width="200"/>
+
+## Autores
+
+- **Enzo Dellape**
+- **Federico Gastaldi**
+
+## Tecnologías Utilizadas
+
+Este proyecto fue desarrollado utilizando las siguientes tecnologías:
+
+- **React**
+- **Node.js**
+- **MySQL**
+
+## Descripción
+
+Este repositorio contiene el proyecto final correspondiente a la materia **Prácticas Profesionales 4**, desarrollado con un enfoque full stack utilizando React para el frontend, Node.js para el backend y MySQL como sistema de gestión de bases de datos.
