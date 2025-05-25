@@ -1,10 +1,16 @@
-import "./App.css";
-import Header from "./Components/Header";
+import { BrowserRouter } from "react-router-dom";
+import AppRoutes from "./Components/routes/AppRoutes";
 function App() {
   return (
-    <>
-      <Header />
-    </>
+    <BrowserRouter>
+      <AppRoutes />
+    </BrowserRouter>
+    // <div className="bg-gray-100">
+    //   <Header />
+    //   <Carruse />
+    //   <Hero />
+    //   <CardDetail />
+    // </div>
   );
 }
 

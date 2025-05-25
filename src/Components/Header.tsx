@@ -4,7 +4,7 @@ import { Bars3Icon } from "@heroicons/react/24/solid";
 function Header() {
   return (
     <header>
-      <div className="flex justify-between items-center verdeFailbnb border-b-2">
+      <div className="flex justify-between items-center bg-verdeFailbnb border-b-2">
         <img className="ml-5 w-28 h-28" src="logo.png" alt="LogoFailBnb" />
         <div className="flex items-center text-white gap-5">
           <h4 className="cursor-pointer border border-gray-300 rounded-full px-4 py-2">
@@ -14,7 +14,7 @@ function Header() {
         </div>
       </div>
 
-      <div className="flex items-center justify-center gap-5 border-2 p-6 border-gray-200 rounded-xl mt-3 w-fit mx-auto font-bold">
+      <div className="flex items-center justify-center gap-5 border-2 p-6 border-gray-200 rounded-full mt-3 w-fit mx-auto font-bold">
         {/* CheckIn */}
         <div>
           <button className="cursor-pointer border border-gray-300 rounded-xl px-4 py-2">
