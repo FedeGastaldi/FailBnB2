@@ -1,7 +1,22 @@
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import { Bars3Icon } from "@heroicons/react/24/solid";
-
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 function Header() {
+  const navigate = useNavigate();
+
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const toggleMenu = () => {
+    setIsMenuOpen((prev) => !prev);
+  };
+  const goToLogin = () => {
+    navigate("/Login");
+    setIsMenuOpen(false);
+  };
+  const goToRegister = () => {
+    navigate("/Register");
+    setIsMenuOpen(false);
+  };
   return (
     <header>
       <div className="flex justify-between items-center bg-verdeFailbnb border-b-2">
@@ -10,7 +25,28 @@ function Header() {
           <h4 className="cursor-pointer border border-gray-300 rounded-full px-4 py-2">
             Conviertete en Anfitrión
           </h4>
-          <Bars3Icon className="w-10 h-10 text-white mr-5 cursor-pointer" />
+          <div className="relative mr-5">
+            <Bars3Icon
+              className="w-10 h-10 text-white cursor-pointer"
+              onClick={toggleMenu}
+            />
+            {isMenuOpen && (
+              <div className="absolute right-0 mt-2 w-40 bg-white rounded shadow-lg text-black z-50">
+                <button
+                  onClick={goToLogin}
+                  className="w-full text-left px-4 py-2 hover:bg-gray-100"
+                >
+                  Iniciar sesión
+                </button>
+                <button
+                  onClick={goToRegister}
+                  className="w-full text-left px-4 py-2 hover:bg-gray-100"
+                >
+                  Registrarse
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
