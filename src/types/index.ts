@@ -7,3 +7,11 @@ export type CardProps = {
   camas: number;
   banios: number;
 };
+export type PropiedadFromDB = {
+  id: number;
+  titulo: string;
+  descripcion?: string;
+  precio_noche: number;
+  cant_habitaciones: number;
+  cant_banios: number;
+};
