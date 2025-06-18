@@ -41,7 +41,7 @@ const Card = ({
           {titulo}
         </h4>
         <div className="mt-1 text-gray-600 text-sm font-semibold">
-          ${precio} por 2 noches
+          ${precio} por noche
         </div>
         <div className="mt-2 text-teal-600 font-semibold">{calificacion}★</div>
       </div>

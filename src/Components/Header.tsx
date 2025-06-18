@@ -2,6 +2,7 @@ import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import { Bars3Icon } from "@heroicons/react/24/solid";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 function Header() {
   const navigate = useNavigate();
@@ -15,22 +16,32 @@ function Header() {
     }
   }, []);
 
+  //ir a crear propiedad
+  const handleGoToCrearPropiedad = () => {
+    if (usuario) {
+      navigate("/crear-propiedad");
+    } else {
+      navigate("/Login");
+      toast.warning("Debes iniciar sesión para crear una propiedad");
+    }
+  };
+
   const toggleMenu = () => {
     setIsMenuOpen((prev) => !prev);
   };
-
+  //Cerrar sesión
   const handleLogout = () => {
     localStorage.removeItem("usuario");
     setUsuario(null);
     navigate("/");
     setIsMenuOpen(false);
   };
-
+  //ir a login
   const goToLogin = () => {
     navigate("/Login");
     setIsMenuOpen(false);
   };
-
+  //ir a register
   const goToRegister = () => {
     navigate("/Register");
     setIsMenuOpen(false);
@@ -42,7 +53,10 @@ function Header() {
         <img className="ml-5 w-28 h-28" src="logo.png" alt="LogoFailBnb" />
 
         <div className="flex items-center text-white gap-5 relative mr-5">
-          <h4 className="cursor-pointer border border-gray-300 rounded-full px-4 py-2">
+          <h4
+            onClick={handleGoToCrearPropiedad}
+            className="cursor-pointer border border-gray-300 rounded-full px-4 py-2"
+          >
             Conviértete en Anfitrión
           </h4>
 
@@ -106,13 +120,15 @@ function Header() {
         </div>
       </div>
 
-      <div className="flex items-center justify-center gap-5 border-2 p-6 border-gray-200 rounded-full mt-3 w-fit mx-auto font-bold">
+      <div className="flex items-center justify-center gap-5 border-2 p-8 border-gray-200 rounded-full mt-3 w-fit mx-auto font-bold">
         <div>
           <button className="cursor-pointer border border-gray-300 rounded-xl px-4 py-2">
-            CheckIn: <span className="font-extralight">¿Cuándo?</span>
+            Lugar <span className="font-extralight">¿A Donde?</span>
           </button>
         </div>
-
+        <button className="cursor-pointer border border-gray-300 rounded-xl px-4 py-2">
+          CheckIn: <span className="font-extralight">¿Cuándo?</span>
+        </button>
         <div>
           <button className="cursor-pointer border border-gray-300 rounded-xl px-4 py-2">
             CheckOut: <span className="font-extralight">¿Cuándo?</span>

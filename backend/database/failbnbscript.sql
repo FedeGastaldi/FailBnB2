@@ -48,4 +48,6 @@ UNIQUE (id_propiedad,fecha)
 );
 INSERT INTO usuarios (nombre, email, pass, telefono, es_anfitrion)
 VALUES ('admin', 'admin@mail.com', 'admin', '0000000000', TRUE);
+ALTER TABLE propiedades ADD ubicacion VARCHAR(100) DEFAULT "Desconocida";
+ALTER TABLE imagenes_propiedad MODIFY url_imagen LONGTEXT;
 

@@ -6,6 +6,7 @@ export type CardProps = {
   precio: number;
   camas: number;
   banios: number;
+  ubicacion: string;
 };
 export type PropiedadFromDB = {
   id: number;
@@ -14,4 +15,14 @@ export type PropiedadFromDB = {
   precio_noche: number;
   cant_habitaciones: number;
   cant_banios: number;
+  ubicacion: string;
+};
+export type NuevaPropiedadPayload = Omit<PropiedadFromDB, "id"> & {
+  descripcion?: string;
+  direccion: string;
+  cant_habitaciones: number;
+  cant_baños: number;
+  capacidad_max: number;
+  precio_noche: number;
+  id_usuario: number;
 };
