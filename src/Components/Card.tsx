@@ -16,7 +16,12 @@ const Card = ({
   };
   const getImagenSrc = (portada: string) => {
     if (!portada) return "/img/default.jpg";
-    return portada; // ya está en formato correcto
+
+    // si ya viene en formato base64 completo, lo usás directo
+    if (portada.startsWith("data:image/")) return portada;
+
+    // si viene en base64 pelado desde la DB
+    return `data:image/jpeg;base64,${portada}`;
   };
 
   return (

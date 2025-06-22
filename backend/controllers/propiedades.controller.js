@@ -22,8 +22,9 @@ const getAllpropiedades = (req, res) => {
     // Agregamos la URL completa
     const propiedadesConUrl = results.map((prop) => ({
       ...prop,
-      // la portada ya viene como base64, no hace falta agregarle nada
-      portada: prop.portada,
+      portada: prop.portada?.startsWith("data:image")
+        ? prop.portada
+        : `data:image/jpeg;base64,${prop.portada}` || "",
     }));
 
     res.json(propiedadesConUrl);

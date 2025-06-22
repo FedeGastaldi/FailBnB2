@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useState } from "react";
 import axios from "axios";
+import imageCompression from "browser-image-compression";
 import type { NuevaPropiedadPayload } from "../../types/index";
 
 function CrearPropiedad() {
@@ -42,34 +43,36 @@ function CrearPropiedad() {
   //imagenes
   const [imagenes, setImagenes] = useState<string[]>([]);
   //convertirlas a base64
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
     if (files.length > 3) {
       toast.warning("Solo puedes subir hasta 3 imágenes");
       return;
     }
 
-    Promise.all(
-      files.map(
-        (file) =>
-          new Promise<string>((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onload = () => {
-              const fullDataUrl = reader.result as string;
-              const base64Data = fullDataUrl.split(",")[1]; // solo el base64
-              resolve(base64Data);
-            };
-            reader.onerror = reject;
-            reader.readAsDataURL(file);
-          })
-      )
-    )
-      .then((base64Imgs) => {
-        setImagenes(base64Imgs);
-      })
-      .catch(() => {
-        toast.error("Error al procesar las imágenes");
+    try {
+      const compressedPromises = files.map(async (file) => {
+        const compressedFile = await imageCompression(file, {
+          maxSizeMB: 0.3, // Máximo 300KB
+          maxWidthOrHeight: 1024, // Reduce resolución si es muy alta
+          useWebWorker: true,
+        });
+
+        return await new Promise<string>((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result as string);
+          reader.onerror = reject;
+          reader.readAsDataURL(compressedFile);
+        });
       });
+
+      const compressedBase64Imgs = await Promise.all(compressedPromises);
+      setImagenes(compressedBase64Imgs);
+      toast.success("Imágenes comprimidas y cargadas");
+    } catch (error) {
+      console.error("Error al comprimir imagenes", error);
+      toast.error("Error al comprimir las imágenes");
+    }
   };
 
   return (
