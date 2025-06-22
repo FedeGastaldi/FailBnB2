@@ -52,6 +52,7 @@ function App() {
           <div className="flex flex-row mt-2 gap-2 flex-wrap">
             {props.slice(0, 3).map((propiedad) => (
               <Card
+                id={propiedad.id}
                 key={propiedad.id}
                 popular={true}
                 titulo={propiedad.titulo}

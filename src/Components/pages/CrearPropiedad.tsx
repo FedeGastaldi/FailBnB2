@@ -2,10 +2,13 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import imageCompression from "browser-image-compression";
 import type { NuevaPropiedadPayload } from "../../types/index";
 
 function CrearPropiedad() {
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -35,6 +38,7 @@ function CrearPropiedad() {
 
       await axios.post("http://localhost:3000/api/propiedades", payload);
       toast.success("Propiedad creada exitosamente");
+      navigate("/");
     } catch (error: any) {
       toast.error("Error al crear propiedad");
       console.error(error);

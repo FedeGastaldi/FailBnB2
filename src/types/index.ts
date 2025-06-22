@@ -1,4 +1,5 @@
 export type CardProps = {
+  id: number;
   popular: boolean;
   titulo: string;
   calificacion: number;
@@ -8,6 +9,7 @@ export type CardProps = {
   banios: number;
   ubicacion: string;
 };
+
 export type PropiedadFromDB = {
   id: number;
   titulo: string;
