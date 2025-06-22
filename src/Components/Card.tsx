@@ -14,6 +14,11 @@ const Card = ({
   const handleClick = () => {
     navigate("/card/1");
   };
+  const getImagenSrc = (portada: string) => {
+    if (!portada) return "/img/default.jpg";
+    return portada; // ya está en formato correcto
+  };
+
   return (
     <div
       className="bg-white rounded-lg overflow-hidden shadow-2xl w-72 cursor-pointer"
@@ -21,9 +26,10 @@ const Card = ({
     >
       <img
         className="h-56 w-full object-cover object-center"
-        src={imagen}
+        src={getImagenSrc(imagen)}
         alt="Imagen de la propiedad"
       />
+
       <div className="p-6">
         <div className="flex items-baseline justify-between">
           {popular && (

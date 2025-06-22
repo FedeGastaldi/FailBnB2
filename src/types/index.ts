@@ -16,6 +16,7 @@ export type PropiedadFromDB = {
   cant_habitaciones: number;
   cant_banios: number;
   ubicacion: string;
+  portada: string;
 };
 export type NuevaPropiedadPayload = Omit<PropiedadFromDB, "id"> & {
   descripcion?: string;
@@ -25,4 +26,5 @@ export type NuevaPropiedadPayload = Omit<PropiedadFromDB, "id"> & {
   capacidad_max: number;
   precio_noche: number;
   id_usuario: number;
+  imagenes: string[];
 };

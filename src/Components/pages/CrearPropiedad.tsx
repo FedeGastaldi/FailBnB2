@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import { useState } from "react";
 import axios from "axios";
 import type { NuevaPropiedadPayload } from "../../types/index";
 
@@ -19,10 +20,16 @@ function CrearPropiedad() {
       return;
     }
 
+    if (imagenes.length === 0) {
+      toast.warning("Debes subir al menos una imagen");
+      return;
+    }
+
     try {
-      const payload = {
+      const payload: NuevaPropiedadPayload = {
         ...data,
-        id_usuario: id_usuario,
+        id_usuario,
+        imagenes,
       };
 
       await axios.post("http://localhost:3000/api/propiedades", payload);
@@ -31,6 +38,38 @@ function CrearPropiedad() {
       toast.error("Error al crear propiedad");
       console.error(error);
     }
+  };
+  //imagenes
+  const [imagenes, setImagenes] = useState<string[]>([]);
+  //convertirlas a base64
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
+    if (files.length > 3) {
+      toast.warning("Solo puedes subir hasta 3 imágenes");
+      return;
+    }
+
+    Promise.all(
+      files.map(
+        (file) =>
+          new Promise<string>((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => {
+              const fullDataUrl = reader.result as string;
+              const base64Data = fullDataUrl.split(",")[1]; // solo el base64
+              resolve(base64Data);
+            };
+            reader.onerror = reject;
+            reader.readAsDataURL(file);
+          })
+      )
+    )
+      .then((base64Imgs) => {
+        setImagenes(base64Imgs);
+      })
+      .catch(() => {
+        toast.error("Error al procesar las imágenes");
+      });
   };
 
   return (
@@ -143,6 +182,23 @@ function CrearPropiedad() {
                 {...register("precio_noche", { required: true, min: 0 })}
                 className="w-full mt-1 border border-gray-300 px-3 py-2 rounded-md"
               />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Imágenes (la primera será la portada)
+              </label>
+              <input
+                type="file"
+                accept="image/*"
+                multiple
+                onChange={handleImageChange}
+                className="w-full mt-1 border border-gray-300 px-3 py-2 rounded-md"
+              />
+              {imagenes.length > 0 && (
+                <p className="text-xs text-gray-500 mt-1">
+                  {imagenes.length} imagen(es) seleccionada(s)
+                </p>
+              )}
             </div>
 
             <div>

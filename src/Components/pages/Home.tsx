@@ -7,6 +7,17 @@ import axios from "axios";
 import type { PropiedadFromDB } from "../../types";
 function App() {
   const [propiedades, setPropiedades] = useState<PropiedadFromDB[]>([]);
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/api/propiedades")
+      .then((response) => {
+        console.log("Datos:", response.data); // 👉 revisá esto en consola
+        setPropiedades(response.data);
+      })
+      .catch((error) => {
+        console.error("Error al cargar propiedades:", error);
+      });
+  }, []);
 
   useEffect(() => {
     axios
@@ -26,6 +37,7 @@ function App() {
     propiedadesPorUbicacion[p.ubicacion].push(p);
   });
   const ubicacionesUnicas = Object.entries(propiedadesPorUbicacion);
+
   return (
     <>
       <Header />
@@ -33,7 +45,9 @@ function App() {
       {ubicacionesUnicas.map(([ubicacion, props], index) => (
         <div key={ubicacion} className="mt-3 mx-auto max-w-3xl px-4">
           <h2 className="cursor-pointer text-2xl font-bold mb-2">
-            Destinos Populares para {ubicacion} <span>&gt;</span>
+            Destinos Populares para{" "}
+            <span className="text-pink-700"> {ubicacion} </span>{" "}
+            <span>&gt;</span>
           </h2>
           <div className="flex flex-row mt-2 gap-2 flex-wrap">
             {props.slice(0, 3).map((propiedad) => (
@@ -44,9 +58,9 @@ function App() {
                 precio={propiedad.precio_noche}
                 camas={propiedad.cant_habitaciones}
                 banios={propiedad.cant_banios}
-                imagen={"/depa2.jpg"} // Esto luego debería venir de propiedad
                 ubicacion={propiedad.ubicacion}
                 calificacion={4.5}
+                imagen={propiedad.portada}
               />
             ))}
           </div>
