@@ -18,7 +18,7 @@ const loginUsuario = (req, res) => {
 
     const usuario = results[0];
 
-    // Si la contraseña está en texto plano (solo para testeo temporal):
+    // Si la contraseña está en texto plano
     if (usuario.pass === pass) {
       return res.json({
         message: "Login exitoso",

@@ -14,6 +14,16 @@ const Card = ({
   const handleClick = () => {
     navigate("/card/1");
   };
+  const getImagenSrc = (portada: string) => {
+    if (!portada) return "/img/default.jpg";
+
+    // si ya viene en formato base64 completo, lo usás directo
+    if (portada.startsWith("data:image/")) return portada;
+
+    // si viene en base64 pelado desde la DB
+    return `data:image/jpeg;base64,${portada}`;
+  };
+
   return (
     <div
       className="bg-white rounded-lg overflow-hidden shadow-2xl w-72 cursor-pointer"
@@ -21,9 +31,10 @@ const Card = ({
     >
       <img
         className="h-56 w-full object-cover object-center"
-        src={imagen}
+        src={getImagenSrc(imagen)}
         alt="Imagen de la propiedad"
       />
+
       <div className="p-6">
         <div className="flex items-baseline justify-between">
           {popular && (
@@ -41,7 +52,7 @@ const Card = ({
           {titulo}
         </h4>
         <div className="mt-1 text-gray-600 text-sm font-semibold">
-          ${precio} por 2 noches
+          ${precio} por noche
         </div>
         <div className="mt-2 text-teal-600 font-semibold">{calificacion}★</div>
       </div>
