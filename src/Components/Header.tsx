@@ -57,7 +57,7 @@ function Header() {
             onClick={handleGoToCrearPropiedad}
             className="cursor-pointer border border-gray-300 rounded-full px-4 py-2"
           >
-            Conviértete en Anfitrión
+            {usuario ? "Crea tu Anuncio Gratis!" : "Crear Propiedad"}
           </h4>
 
           <div className="relative">

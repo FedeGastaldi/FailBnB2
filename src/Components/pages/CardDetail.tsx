@@ -30,7 +30,8 @@ function CardDetail() {
   } = propiedad;
 
   const portada = imagenes[0] || "/img/default.jpg";
-  const secundarias = imagenes.slice(1); // puede ser array vacío
+  // const secundarias = imagenes.slice(1); // puede ser array vacío
+  // console.log(portada, typeof portada);
 
   return (
     <>
@@ -49,7 +50,7 @@ function CardDetail() {
               </div>
 
               {/* Imágenes secundarias */}
-              {secundarias.map((img: string, index: number) => (
+              {/* {secundarias.map((img: string, index: number) => (
                 <div
                   key={index}
                   className="relative overflow-hidden rounded-2xl shadow-lg"
@@ -60,7 +61,7 @@ function CardDetail() {
                     className="w-full h-full object-cover"
                   />
                 </div>
-              ))}
+              ))} */}
             </div>
           </div>
         </div>

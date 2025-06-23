@@ -51,9 +51,12 @@ const getPropiedadById = (req, res) => {
         return res.status(500).json({ error: "Error al obtener imágenes" });
 
       const propiedad = propResult[0];
-      propiedad.imagenes = imgResults.map(
-        (img) => `data:image/jpeg;base64,${img.url_imagen}`
-      );
+      propiedad.imagenes = imgResults.map((img) => {
+        const raw = img.url_imagen || "";
+        return raw.startsWith("data:image/")
+          ? raw
+          : `data:image/jpeg;base64,${raw}`;
+      });
 
       res.json(propiedad);
     });
