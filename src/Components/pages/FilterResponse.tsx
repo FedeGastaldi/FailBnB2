@@ -4,6 +4,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import Card from "../Card";
 import type { PropiedadFromDB } from "../../types/index";
+import Header from "../Header";
 
 function FilterResponse() {
   const [searchParams] = useSearchParams();
@@ -64,34 +65,37 @@ function FilterResponse() {
   });
 
   return (
-    <div className="p-8">
-      <h1 className="text-2xl font-bold mb-4">
-        Resultados en "{ubicacion}" para {viajeros} viajero(s)
-      </h1>
+    <>
+      <Header />
+      <div className="p-8">
+        <h1 className="text-2xl font-bold mb-4">
+          Resultados en "{ubicacion}" para {viajeros} viajero(s)
+        </h1>
 
-      {resultados.length === 0 ? (
-        <p className="text-center text-gray-600">
-          No se encontraron propiedades disponibles con esos filtros.
-        </p>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {resultados.map((prop) => (
-            <Card
-              key={prop.id}
-              id={prop.id}
-              ubicacion={prop.ubicacion}
-              titulo={prop.titulo}
-              imagen={prop.portada}
-              precio={prop.precio_noche}
-              camas={prop.cant_habitaciones}
-              banios={prop.cant_banios || prop.cant_banios}
-              calificacion={5}
-              popular={false}
-            />
-          ))}
-        </div>
-      )}
-    </div>
+        {resultados.length === 0 ? (
+          <p className="text-center text-gray-600">
+            No se encontraron propiedades disponibles con esos filtros.
+          </p>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {resultados.map((prop) => (
+              <Card
+                key={prop.id}
+                id={prop.id}
+                ubicacion={prop.ubicacion}
+                titulo={prop.titulo}
+                imagen={prop.portada}
+                precio={prop.precio_noche}
+                camas={prop.cant_habitaciones}
+                banios={prop.cant_banios || prop.cant_banios}
+                calificacion={5}
+                popular={false}
+              />
+            ))}
+          </div>
+        )}
+      </div>
+    </>
   );
 }
 
