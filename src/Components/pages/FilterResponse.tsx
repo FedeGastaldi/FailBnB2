@@ -56,6 +56,12 @@ function FilterResponse() {
   if (loading) {
     return <p className="text-center mt-10">Cargando resultados...</p>;
   }
+  console.log("Filtrando con:", {
+    ubicacion,
+    checkin,
+    checkout,
+    viajeros,
+  });
 
   return (
     <div className="p-8">

@@ -24,6 +24,3 @@ app.use("/api/propiedades", propiedadesRoutes);
 
 const authRoutes = require("./routes/auth.routes");
 app.use("/api/auth", authRoutes);
-
-const propiedadesRoutes = require("./routes/propiedades.routes");
-app.use("/api/propiedades", propiedadesRoutes);

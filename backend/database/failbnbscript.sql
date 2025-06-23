@@ -56,3 +56,6 @@ CREATE TABLE disponibilidad (
 
 INSERT INTO usuarios (nombre, email, pass, telefono, es_anfitrion)
 VALUES ('admin', 'admin@mail.com', 'admin', '0000000000', TRUE);
+
+
+

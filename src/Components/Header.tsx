@@ -49,14 +49,19 @@ function Header() {
   return (
     <header>
       <div className="flex justify-between items-center bg-verdeFailbnb border-b-2">
-        <img className="ml-5 w-28 h-28" src="logo.png" alt="LogoFailBnb" />
+        <img
+          onClick={() => navigate("/")}
+          className="ml-5 w-28 h-28 cursor-pointer"
+          src="/logo.png"
+          alt="LogoFailBnb"
+        />
 
         <div className="flex items-center text-white gap-5 relative mr-5">
           <h4
             onClick={handleGoToCrearPropiedad}
             className="cursor-pointer border border-gray-300 rounded-full px-4 py-2"
           >
-            {usuario ? "Crea tu Anuncio Gratis!" : "Crear Propiedad"}
+            {usuario ? "Crear Propiedad" : "Crea tu Anuncio Gratis!"}
           </h4>
 
           <div className="relative">
