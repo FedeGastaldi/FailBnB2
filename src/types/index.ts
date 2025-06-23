@@ -29,4 +29,6 @@ export type NuevaPropiedadPayload = Omit<PropiedadFromDB, "id"> & {
   precio_noche: number;
   id_usuario: number;
   imagenes: string[];
+  fecha_inicio_disponibilidad: string; //yy-MM-dd
+  fecha_fin_disponibilidad: string; //yy-MM-dd
 };

@@ -3,7 +3,7 @@ const cors = require("cors"); //Error de CORS
 const reservasRoutes = require("./routes/reservas.routes");
 
 const app = express();
-// Solucionar el proble de de CORS
+// Solucionar el problema  de CORS
 app.use(
   cors({
     origin: "http://localhost:5173", // permite al fornt acceder
@@ -24,3 +24,6 @@ app.use("/api/propiedades", propiedadesRoutes);
 
 const authRoutes = require("./routes/auth.routes");
 app.use("/api/auth", authRoutes);
+
+const propiedadesRoutes = require("./routes/propiedades.routes");
+app.use("/api/propiedades", propiedadesRoutes);

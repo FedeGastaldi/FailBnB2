@@ -2,6 +2,18 @@ const db = require("../models/db");
 const path = require("path");
 const fs = require("fs");
 
+function getFechasEntre(inicio, fin) {
+  const fechas = [];
+  let current = new Date(inicio);
+  const end = new Date(fin);
+
+  while (current <= end) {
+    fechas.push(current.toISOString().split("T")[0]); // formato YYYY-MM-DD
+    current.setDate(current.getDate() + 1);
+  }
+
+  return fechas;
+}
 // Obtener todas las propiedades
 const getAllpropiedades = (req, res) => {
   const query = `
@@ -76,6 +88,8 @@ const createPropiedad = (req, res) => {
     precio_noche,
     ubicacion,
     imagenes = [],
+    fecha_inicio_disponibilidad,
+    fecha_fin_disponibilidad,
   } = req.body;
 
   if (!id_usuario || !titulo || !capacidad_max || !precio_noche) {
@@ -107,7 +121,25 @@ const createPropiedad = (req, res) => {
       }
 
       const propiedadId = result.insertId;
+      //insertar fechas
+      if (fecha_inicio_disponibilidad && fecha_fin_disponibilidad) {
+        const fechas = getFechasEntre(
+          fecha_inicio_disponibilidad,
+          fecha_fin_disponibilidad
+        );
 
+        const disponibilidadValues = fechas.map((f) => [propiedadId, f]);
+        const insertDisponQuery = `INSERT INTO disponibilidad (id_propiedad, fecha) VALUES ?`;
+
+        db.query(insertDisponQuery, [disponibilidadValues], (errDisp) => {
+          if (errDisp) {
+            console.error("Error al insertar disponibilidad:", errDisp);
+            // No cortar, seguir igual
+          } else {
+            console.log("Fechas de disponibilidad insertadas");
+          }
+        });
+      }
       if (!Array.isArray(imagenes) || imagenes.length === 0) {
         return res.status(201).json({
           message: "Propiedad creada sin imágenes",
@@ -202,6 +234,106 @@ const getImagenesByPropiedad = (req, res) => {
     }
   );
 };
+//Filtro
+// Filtro por ubicación, fechas y cantidad de viajeros
+const buscarPropiedadesDisponibles = (req, res) => {
+  const { ubicacion, checkin, checkout, viajeros } = req.query;
+
+  if (!ubicacion || !checkin || !checkout || !viajeros) {
+    return res.status(400).json({ error: "Faltan parámetros de búsqueda" });
+  }
+
+  const query = `
+    SELECT p.*, 
+      (SELECT url_imagen FROM imagenes_propiedad WHERE id_propiedad = p.id LIMIT 1) AS portada
+    FROM propiedades p
+    WHERE p.ubicacion LIKE ?
+      AND p.capacidad_max >= ?
+      AND p.id NOT IN (
+        SELECT d.id_propiedad
+        FROM disponibilidad d
+        WHERE d.fecha BETWEEN ? AND ? AND d.disponible = 0
+        GROUP BY d.id_propiedad
+      )
+  `;
+
+  db.query(
+    query,
+    [`%${ubicacion}%`, parseInt(viajeros), checkin, checkout],
+    (err, results) => {
+      if (err) {
+        console.error("Error al buscar propiedades:", err);
+        return res.status(500).json({ error: "Error al buscar propiedades" });
+      }
+
+      const propiedades = results.map((prop) => ({
+        ...prop,
+        portada: prop.portada?.startsWith("data:image")
+          ? prop.portada
+          : `data:image/jpeg;base64,${prop.portada}` || "",
+      }));
+
+      res.json(propiedades);
+    }
+  );
+};
+// Filtrar
+const filtrarPropiedades = (req, res) => {
+  const { ubicacion, checkin, checkout, viajeros } = req.query;
+
+  if (!ubicacion || !checkin || !checkout || !viajeros) {
+    return res.status(400).json({ error: "Faltan parámetros de búsqueda" });
+  }
+
+  // Creamos lista de fechas entre checkin y checkout
+  const fechas = [];
+  let current = new Date(checkin);
+  const end = new Date(checkout);
+
+  while (current <= end) {
+    fechas.push(current.toISOString().split("T")[0]); // yyyy-mm-dd
+    current.setDate(current.getDate() + 1);
+  }
+
+  // Construir placeholders (?, ?, ?, ...) según la cantidad de fechas
+  const placeholders = fechas.map(() => "?").join(",");
+
+  const sql = `
+    SELECT DISTINCT p.*, 
+      (SELECT url_imagen FROM imagenes_propiedad WHERE id_propiedad = p.id ORDER BY id LIMIT 1) AS portada
+    FROM propiedades p
+    JOIN disponibilidad d ON p.id = d.id_propiedad
+    WHERE p.ubicacion LIKE ? 
+      AND p.capacidad_max >= ?
+      AND d.fecha IN (${placeholders})
+      AND d.disponible = TRUE
+    GROUP BY p.id
+    HAVING COUNT(d.fecha) = ?
+  `;
+
+  const values = [
+    `%${ubicacion}%`,
+    parseInt(viajeros),
+    ...fechas,
+    fechas.length,
+  ];
+
+  db.query(sql, values, (err, results) => {
+    if (err) {
+      console.error("Error al filtrar propiedades:", err);
+      return res.status(500).json({ error: "Error interno del servidor" });
+    }
+
+    const propiedadesConUrl = results.map((prop) => ({
+      ...prop,
+      portada: prop.portada?.startsWith("data:image")
+        ? prop.portada
+        : `data:image/jpeg;base64,${prop.portada}` || "",
+    }));
+
+    res.json(propiedadesConUrl);
+  });
+};
 
 module.exports = {
   getAllpropiedades,
@@ -210,4 +342,6 @@ module.exports = {
   updatePropiedad,
   deletePropiedad,
   getImagenesByPropiedad,
+  buscarPropiedadesDisponibles,
+  filtrarPropiedades,
 };

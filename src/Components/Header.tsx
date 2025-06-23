@@ -1,4 +1,3 @@
-import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import { Bars3Icon } from "@heroicons/react/24/solid";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -117,35 +116,6 @@ function Header() {
               </div>
             )}
           </div>
-        </div>
-      </div>
-
-      <div className="flex items-center justify-center gap-5 border-2 p-8 border-gray-200 rounded-full mt-3 w-fit mx-auto font-bold">
-        <div>
-          <button className="cursor-pointer border border-gray-300 rounded-xl px-4 py-2">
-            Lugar <span className="font-extralight">¿A Donde?</span>
-          </button>
-        </div>
-        <button className="cursor-pointer border border-gray-300 rounded-xl px-4 py-2">
-          CheckIn: <span className="font-extralight">¿Cuándo?</span>
-        </button>
-        <div>
-          <button className="cursor-pointer border border-gray-300 rounded-xl px-4 py-2">
-            CheckOut: <span className="font-extralight">¿Cuándo?</span>
-          </button>
-        </div>
-
-        <div>
-          <label>Viajeros:</label>
-          <select className="cursor-pointer border border-gray-300 rounded-xl px-4 py-2">
-            <option>¿Cuántos?</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-          </select>
-        </div>
-
-        <div>
-          <MagnifyingGlassIcon className="w-10 h-10 cursor-pointer border border-gray-300 rounded-xl p-2" />
         </div>
       </div>
     </header>

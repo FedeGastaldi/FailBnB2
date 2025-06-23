@@ -5,13 +5,13 @@ import Hero from "../../Components/Hero";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import type { PropiedadFromDB } from "../../types";
+import SearchFilter from "../SearchFilter";
 function App() {
   const [propiedades, setPropiedades] = useState<PropiedadFromDB[]>([]);
   useEffect(() => {
     axios
       .get("http://localhost:3000/api/propiedades")
       .then((response) => {
-        console.log("Datos:", response.data); // 👉 revisá esto en consola
         setPropiedades(response.data);
       })
       .catch((error) => {
@@ -41,7 +41,7 @@ function App() {
   return (
     <>
       <Header />
-
+      <SearchFilter />
       {ubicacionesUnicas.map(([ubicacion, props], index) => (
         <div key={ubicacion} className="mt-3 mx-auto max-w-3xl px-4">
           <h2 className="cursor-pointer text-2xl font-bold mb-2">

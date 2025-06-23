@@ -4,6 +4,7 @@ import CardDetail from "../pages/CardDetail";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import CrearPropiedad from "../pages/CrearPropiedad";
+import FilterResponse from "../pages/FilterResponse";
 function AppRoutes() {
   return (
     <Routes>
@@ -12,6 +13,7 @@ function AppRoutes() {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/crear-propiedad" element={<CrearPropiedad />} />
+      <Route path="/filter-response" element={<FilterResponse />} />
     </Routes>
   );
 }

@@ -155,6 +155,11 @@ function CrearPropiedad() {
                 {...register("cant_habitaciones", { required: true, min: 1 })}
                 className="w-full mt-1 border border-gray-300 px-3 py-2 rounded-md"
               />
+              {errors.cant_habitaciones && (
+                <p className="text-red-600 text-sm">
+                  {errors.cant_habitaciones.message}
+                </p>
+              )}
             </div>
 
             <div>
@@ -166,6 +171,11 @@ function CrearPropiedad() {
                 {...register("cant_baños", { required: true, min: 1 })}
                 className="w-full mt-1 border border-gray-300 px-3 py-2 rounded-md"
               />
+              {errors.cant_baños && (
+                <p className="text-red-600 text-sm">
+                  {errors.cant_baños.message}
+                </p>
+              )}
             </div>
 
             <div>
@@ -177,6 +187,11 @@ function CrearPropiedad() {
                 {...register("capacidad_max", { required: true, min: 1 })}
                 className="w-full mt-1 border border-gray-300 px-3 py-2 rounded-md"
               />
+              {errors.capacidad_max && (
+                <p className="text-red-600 text-sm">
+                  {errors.capacidad_max.message}
+                </p>
+              )}
             </div>
 
             <div>
@@ -189,6 +204,46 @@ function CrearPropiedad() {
                 {...register("precio_noche", { required: true, min: 0 })}
                 className="w-full mt-1 border border-gray-300 px-3 py-2 rounded-md"
               />
+              {errors.precio_noche && (
+                <p className="text-red-600 text-sm">
+                  {errors.precio_noche.message}
+                </p>
+              )}
+            </div>
+            {/* Fechas */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Disponible desde:
+              </label>
+              <input
+                type="date"
+                {...register("fecha_inicio_disponibilidad", {
+                  required: "Fecha de inicio requerida",
+                })}
+                className="w-full mt-1 border border-gray-300 px-3 py-2 rounded-md"
+              />
+              {errors.fecha_inicio_disponibilidad?.message && (
+                <p className="text-red-600 text-sm">
+                  {errors.fecha_inicio_disponibilidad.message}
+                </p>
+              )}
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Disponible Hasta:
+              </label>
+              <input
+                type="date"
+                {...register("fecha_fin_disponibilidad", {
+                  required: "Fecha de fin requerida",
+                })}
+                className="w-full mt-1 border border-gray-300 px-3 py-2 rounded-md"
+              />
+              {errors.fecha_fin_disponibilidad?.message && (
+                <p className="text-red-600 text-sm">
+                  {errors.fecha_fin_disponibilidad.message}
+                </p>
+              )}
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700">
@@ -204,6 +259,11 @@ function CrearPropiedad() {
               {imagenes.length > 0 && (
                 <p className="text-xs text-gray-500 mt-1">
                   {imagenes.length} imagen(es) seleccionada(s)
+                </p>
+              )}
+              {errors.imagenes && (
+                <p className="text-red-600 text-sm">
+                  {errors.imagenes.message}
                 </p>
               )}
             </div>

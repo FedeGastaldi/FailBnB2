@@ -17,4 +17,8 @@ router.put("/:id", propiedadesController.updatePropiedad);
 // Eliminar una Propiedad por ID
 router.delete("/:id", propiedadesController.deletePropiedad);
 
+//Filtro
+router.get("/disponibles", propiedadesController.buscarPropiedadesDisponibles);
+// Obtener imágenes de una Propiedad por ID
+router.get("/filtrar", propiedadesController.filtrarPropiedades);
 module.exports = router;
