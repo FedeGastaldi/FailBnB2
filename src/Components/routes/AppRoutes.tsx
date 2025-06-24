@@ -5,6 +5,9 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import CrearPropiedad from "../pages/CrearPropiedad";
 import FilterResponse from "../pages/FilterResponse";
+import Profile from "../pages/Profile";
+import Recuperar from "../pages/Recuperar";
+
 function AppRoutes() {
   return (
     <Routes>
@@ -14,6 +17,8 @@ function AppRoutes() {
       <Route path="/register" element={<Register />} />
       <Route path="/crear-propiedad" element={<CrearPropiedad />} />
       <Route path="/filter-response" element={<FilterResponse />} />
+      <Route path="/perfil" element={<Profile />} />
+      <Route path="/recuperar" element={<Recuperar />} />
     </Routes>
   );
 }

@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import Header from "../Header";
 
 type FormData = {
@@ -14,6 +15,8 @@ function Login() {
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>();
+
+  const navigate = useNavigate();
 
   const onSubmit = async (data: FormData) => {
     try {
@@ -47,12 +50,12 @@ function Login() {
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600 max-w">
             O{" "}
-            <a
-              href="#"
-              className="font-medium text-blue-600 hover:text-blue-500"
+            <span
+              onClick={() => navigate("/Register")}
+              className="font-medium text-blue-600 hover:text-blue-500 cursor-pointer"
             >
               Crea tu Cuenta en FailBnB
-            </a>
+            </span>
           </p>
         </div>
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
@@ -109,12 +112,13 @@ function Login() {
               </div>
 
               <div className="text-sm text-center">
-                <a
-                  href="#"
-                  className="font-medium text-blue-600 hover:text-blue-500"
+                <button
+                  type="button"
+                  onClick={() => navigate("/recuperar")}
+                  className="text-sm text-blue-600 hover:underline mt-2"
                 >
                   ¿Olvidaste tu contraseña?
-                </a>
+                </button>
               </div>
 
               <div>
