@@ -1,11 +1,10 @@
-import { MagnifyingGlassIcon, Bars3Icon } from "@heroicons/react/24/solid";
-import { useNavigate, useLocation } from "react-router-dom";
+import { Bars3Icon } from "@heroicons/react/24/solid";
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import { toast } from "react-toastify";
 
 function Header() {
   const navigate = useNavigate();
-  const location = useLocation();
   const menuRef = useRef<HTMLDivElement>(null);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);

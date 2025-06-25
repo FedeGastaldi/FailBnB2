@@ -32,3 +32,6 @@ export type NuevaPropiedadPayload = Omit<PropiedadFromDB, "id"> & {
   fecha_inicio_disponibilidad: string; //yy-MM-dd
   fecha_fin_disponibilidad: string; //yy-MM-dd
 };
+export type HeroProps = {
+  imgSrc?: string;
+};

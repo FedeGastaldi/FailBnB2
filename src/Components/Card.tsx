@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import type { CardProps } from "../types";
 
 const Card = ({
@@ -12,9 +12,21 @@ const Card = ({
   banios,
 }: CardProps) => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams(); // <-- esto es clave
 
   const handleClick = () => {
-    navigate(`/card/${id}`);
+    // Reconstituimos los params actuales
+    const checkin = searchParams.get("checkin") || "";
+    const checkout = searchParams.get("checkout") || "";
+    const viajeros = searchParams.get("viajeros") || "";
+
+    navigate(
+      `/card/${id}?checkin=${encodeURIComponent(
+        checkin
+      )}&checkout=${encodeURIComponent(checkout)}&viajeros=${encodeURIComponent(
+        viajeros
+      )}`
+    );
   };
 
   const getImagenSrc = (portada: string) => {

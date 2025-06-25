@@ -1,4 +1,6 @@
-function Hero() {
+import type { HeroProps } from "../types";
+
+function Hero({ imgSrc = "mardel.jpg" }: HeroProps) {
   return (
     <div className="flex flex-wrap">
       <div className="w-full sm:w-8/12 mb-10">
@@ -23,7 +25,10 @@ function Hero() {
                 naturaleza. Explorá, reservá y viví una experiencia diferente en
                 cada rincón.
               </p>
-              <button className="bg-pink-700 text-white text-2xl font-medium px-4 py-2 rounded shadow">
+              <button
+                onClick={() => window.scroll({ top: 0, behavior: "smooth" })}
+                className="bg-pink-700 text-white text-2xl font-medium px-4 py-2 rounded shadow"
+              >
                 Resrva Ahora!
               </button>
             </div>
@@ -31,7 +36,7 @@ function Hero() {
         </div>
       </div>
       <img
-        src="mardel.jpg"
+        src={imgSrc}
         alt="hero-img"
         className="w-full h-24 object-cover sm:h-screen sm:w-4/12"
       />

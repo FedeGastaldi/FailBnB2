@@ -48,9 +48,19 @@ const getAllpropiedades = (req, res) => {
 const getPropiedadById = (req, res) => {
   const id = req.params.id;
 
-  const propQuery = "SELECT * FROM propiedades WHERE id = ?";
-  const imgQuery =
-    "SELECT url_imagen FROM imagenes_propiedad WHERE id_propiedad = ?";
+  const propQuery = `
+    SELECT p.*, 
+           u.nombre AS nombre_anfitrion, 
+           u.apellido AS apellido_anfitrion, 
+           u.fecha_registro AS fecha_anfitrion
+    FROM propiedades p
+    JOIN usuarios u ON p.id_usuario = u.id
+    WHERE p.id = ?
+  `;
+
+  const imgQuery = `
+    SELECT url_imagen FROM imagenes_propiedad WHERE id_propiedad = ?
+  `;
 
   db.query(propQuery, [id], (err, propResult) => {
     if (err)
@@ -63,12 +73,24 @@ const getPropiedadById = (req, res) => {
         return res.status(500).json({ error: "Error al obtener imágenes" });
 
       const propiedad = propResult[0];
+
       propiedad.imagenes = imgResults.map((img) => {
         const raw = img.url_imagen || "";
         return raw.startsWith("data:image/")
           ? raw
           : `data:image/jpeg;base64,${raw}`;
       });
+
+      propiedad.anfitrion = {
+        nombre: propiedad.nombre_anfitrion,
+        apellido: propiedad.apellido_anfitrion,
+        fecha_registro: propiedad.fecha_anfitrion,
+      };
+
+      // Limpiar para evitar redundancia
+      delete propiedad.nombre_anfitrion;
+      delete propiedad.apellido_anfitrion;
+      delete propiedad.fecha_anfitrion;
 
       res.json(propiedad);
     });

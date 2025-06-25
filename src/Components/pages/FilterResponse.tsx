@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import Card from "../Card";
 import type { PropiedadFromDB } from "../../types/index";
 import Header from "../Header";
+import SearchFilter from "../SearchFilter";
 
 function FilterResponse() {
   const [searchParams] = useSearchParams();
@@ -57,16 +58,11 @@ function FilterResponse() {
   if (loading) {
     return <p className="text-center mt-10">Cargando resultados...</p>;
   }
-  console.log("Filtrando con:", {
-    ubicacion,
-    checkin,
-    checkout,
-    viajeros,
-  });
 
   return (
     <>
       <Header />
+      <SearchFilter />
       <div className="p-8">
         <h1 className="text-2xl font-bold mb-4">
           Resultados en "{ubicacion}" para {viajeros} viajero(s)

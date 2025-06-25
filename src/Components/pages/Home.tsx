@@ -6,8 +6,10 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import type { PropiedadFromDB } from "../../types";
 import SearchFilter from "../SearchFilter";
+
 function App() {
   const [propiedades, setPropiedades] = useState<PropiedadFromDB[]>([]);
+  const heroImages = ["mardel.jpg", "depa2.jpg"];
   useEffect(() => {
     axios
       .get("http://localhost:3000/api/propiedades")
@@ -69,7 +71,9 @@ function App() {
           {/* Mostrar el Hero cada 4 secciones */}
           {(index + 1) % 4 === 0 && (
             <div className="mt-6 mx-auto max-w-7xl">
-              <Hero />
+              <Hero
+                imgSrc={heroImages[((index + 1) / 4 - 1) % heroImages.length]}
+              />
             </div>
           )}
         </div>
