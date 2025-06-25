@@ -1,6 +1,8 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import type { CardProps } from "../types";
+
 const Card = ({
+  id,
   popular,
   titulo,
   calificacion,
@@ -10,10 +12,28 @@ const Card = ({
   banios,
 }: CardProps) => {
   const navigate = useNavigate();
-  // Esto debe cambiar a un ID
+  const [searchParams] = useSearchParams(); // <-- esto es clave
+
   const handleClick = () => {
-    navigate("/card/1");
+    // Reconstituimos los params actuales
+    const checkin = searchParams.get("checkin") || "";
+    const checkout = searchParams.get("checkout") || "";
+    const viajeros = searchParams.get("viajeros") || "";
+
+    navigate(
+      `/card/${id}?checkin=${encodeURIComponent(
+        checkin
+      )}&checkout=${encodeURIComponent(checkout)}&viajeros=${encodeURIComponent(
+        viajeros
+      )}`
+    );
   };
+
+  const getImagenSrc = (portada: string) => {
+    if (!portada) return "/img/default.jpg";
+    return portada;
+  };
+
   return (
     <div
       className="bg-white rounded-lg overflow-hidden shadow-2xl w-72 cursor-pointer"
@@ -21,13 +41,13 @@ const Card = ({
     >
       <img
         className="h-56 w-full object-cover object-center"
-        src={imagen}
+        src={getImagenSrc(imagen)}
         alt="Imagen de la propiedad"
       />
       <div className="p-6">
         <div className="flex items-baseline justify-between">
           {popular && (
-            <span className="inline-block bg-olivaOscuro text-white  py-2 px-4 text-xs rounded-full uppercase font-bold tracking-wide">
+            <span className="inline-block bg-olivaOscuro text-white py-2 px-4 text-xs rounded-full uppercase font-bold tracking-wide">
               popular
             </span>
           )}
@@ -41,7 +61,7 @@ const Card = ({
           {titulo}
         </h4>
         <div className="mt-1 text-gray-600 text-sm font-semibold">
-          ${precio} por 2 noches
+          ${precio} por noche
         </div>
         <div className="mt-2 text-teal-600 font-semibold">{calificacion}★</div>
       </div>
