@@ -1,4 +1,4 @@
-# Proyecto Final – Prácticas Profesionales 4
+# Proyecto Final 
 
 <img src="public/logo.png" alt="Logo del Proyecto" width="200"/>
 
@@ -17,4 +17,4 @@ Este proyecto fue desarrollado utilizando las siguientes tecnologías:
 
 ## Descripción
 
-Este repositorio contiene el proyecto final correspondiente a la materia **Prácticas Profesionales 4**, desarrollado con un enfoque full stack utilizando React para el frontend, Node.js para el backend y MySQL como sistema de gestión de bases de datos.
+Este repositorio contiene el proyecto final desarrollado con un enfoque full stack utilizando React para el frontend, Node.js para el backend y MySQL como sistema de gestión de bases de datos.
