@@ -1,6 +1,12 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  _content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  get content() {
+    return this._content;
+  },
+  set content(value) {
+    this._content = value;
+  },
   theme: {
     extend: {
       colors: {
@@ -9,7 +15,7 @@ export default {
         olivaOscuro: "#336633",
         durazno: "#FFAA66",
         cobre: "#CC7733",
-        terracota: "#E9A672 ",
+        terracota: "#E9A672",
       },
     },
   },
